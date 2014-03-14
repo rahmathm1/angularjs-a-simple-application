@@ -1,0 +1,55 @@
+
+<div class='navbar navbar-default navbar-fixed-top'>
+  <div class='container'>
+    <div class='navbar-header'>
+      <button class='navbar-toggle' data-target='.navbar-collapse' data-toggle='collapse' type='button'> <span class='glyphicon glyphicon-list'></span> </button>
+      <a class='navbar-brand' href='/project-tracker'>AngularJS Demonstration</a> </div>
+    <div class='navbar-collapse collapse'>
+      <ul class='nav navbar-nav'>
+        <li> <a href='#/headlines'>Headlines</a> </li>
+        <li> <a href='#/news'>All News</a> </li>
+        <li> <a href='#/news/new'>Post</a> </li>
+      </ul>
+      <ul class='nav navbar-nav navbar-right'>
+        <li> <a href="#/logout" rel="nofollow">Logout</a> </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--Top nav bar ends here -->
+
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h1>Welcome</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+  	<h3>All News</h3>
+    <ul>
+      <li ng-repeat="new in news">
+        <h4>{{ new.title }}</h4>
+        <p>{{ new.description }}</p>
+        <a href="#/news/{{ new.id }}/edit" class="btn btn-xs btn-primary">Edit</a>
+        <a href="#" class="btn btn-xs btn-danger">Remove</a> </li>
+    </ul>
+  </div>
+  <div class="col-md-4">
+  	<h3>Headlines</h3>
+    <ul>
+      <li ng-repeat="new in news">
+        <a href="{{ new.link }}"><h5>{{ new.title }}</h5></a>
+      </li>
+    </ul>
+    <h3>Newsletter</h3>
+    <div class="input-group">
+      <input type="text" class="form-control">
+      <span class="input-group-btn">
+        <button class="btn btn-info" placeholder="Email ID" type="button">Subscribe</button>
+      </span>
+    </div><!-- /input-group -->
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 offset-md-3"> </div>
+</div>
