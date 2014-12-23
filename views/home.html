@@ -38,16 +38,9 @@
   	<h3>Headlines</h3>
     <ul>
       <li ng-repeat="new in news">
-        <a href="{{ new.link }}"><h5>{{ new.title }}</h5></a>
+        <a href="#/news/{{ new.id }}"><h5>{{ new.title }}</h5></a>
       </li>
     </ul>
-    <h3>Newsletter</h3>
-    <div class="input-group">
-      <input type="text" class="form-control">
-      <span class="input-group-btn">
-        <button class="btn btn-info" placeholder="Email ID" type="button">Subscribe</button>
-      </span>
-    </div><!-- /input-group -->
   </div>
 </div>
 <div class="row">

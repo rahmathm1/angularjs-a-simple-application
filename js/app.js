@@ -9,10 +9,28 @@ app.run(function($rootScope, ngProgress) {
     ngProgress.complete();
   });
 });
-app.config(function($routeProvider,$locationProvider) {
+app.config(function($routeProvider,$locationProvider,$httpProvider) {
 	
 	//$locationProvider.html5Mode(true);
-	
+	$httpProvider.interceptors.push(function ($q, $location) {
+	    return {
+	        request: function (config) {
+	            return config;
+	        },
+
+	        response: function (result) {
+	            return result;
+	        },
+
+	        responseError: function (rejection) {
+	            console.log('Failed with ', rejection.status, ' status');
+	            if (rejection.status == 401) {
+	                $location.url('/login');
+	            }
+	            return $q.reject(rejection);
+	        }
+	    }
+	});
 	$routeProvider.when('/login',{
 		templateUrl : 'views/login.html',
 		controller: 'LoginController'
