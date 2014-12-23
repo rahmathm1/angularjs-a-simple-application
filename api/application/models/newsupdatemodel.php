@@ -49,6 +49,18 @@ class newsupdatemodel extends CI_Model {
 		else 
 			return $this->db->insert('news', $data);
 		
+	}	
+	function update_newsupdate($id,$params)
+	{
+		$title = $params['title'];
+		$description = $params['description'];
+		$data = array(
+		   'title' => $title ,
+		   'description' => $description 
+		);
+		$this->db->where('id',$id);
+		return $this->db->update('news', $data); 
+
 	}		
 	
 }

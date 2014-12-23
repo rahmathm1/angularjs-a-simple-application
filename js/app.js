@@ -1,7 +1,14 @@
 // JavaScript Document
 
-var app = angular.module('app', ['ngResource', 'ngRoute']);
-
+var app = angular.module('app', ['ngResource', 'ngRoute','ngProgress']);
+app.run(function($rootScope, ngProgress) {
+  $rootScope.$on('$routeChangeStart', function(ev,data) {
+    ngProgress.start();
+  });
+  $rootScope.$on('$routeChangeSuccess', function(ev,data) {
+    ngProgress.complete();
+  });
+});
 app.config(function($routeProvider,$locationProvider) {
 	
 	//$locationProvider.html5Mode(true);
@@ -30,20 +37,22 @@ app.config(function($routeProvider,$locationProvider) {
 
 app.factory('ApiService', function() {
   return {
-      url : 'http://localhost/angularjs/api/angularjs'
+      url : 'http://localhost:88/angularjs-a-simple-application/api/news'
   };
 });
 
 app.controller('LoginController',function($scope,$location) {
-	$scope.credentials = { username : "admin" , password: "123"};
+	//$scope.credentials = { username : "admin" , password: "123"};
 	
 	$scope.login = function() {
 		if($scope.credentials.username == "admin") {
 			$location.path("/news");
+		} else {
+			alert('admin is ther username')
 		}
 	}
 });
-app.controller('AddNewsController',function($scope,$location,$resource,ApiService,$routeParams) {
+app.controller('AddNewsController',function($scope,$location,$resource,ApiService,$routeParams,ngProgress) {
 	var NewsUpdate = $resource(ApiService.url + '/newsupdate/id/:id', { id : '@id' } );
 	if($routeParams.id) {
 		var newsUpdate = NewsUpdate.get($routeParams, function() {
@@ -58,11 +67,12 @@ app.controller('AddNewsController',function($scope,$location,$resource,ApiServic
 	});*/
 	
 	$scope.saveNews = function() {
-		
+		ngProgress.start();
 		var newsUpdate = new NewsUpdate($scope.newsupdate);
 		newsUpdate.$save(function(response) {
 			$scope.newsupdate = { title: '' , description : '' };
-			alert('Record saved');
+			ngProgress.complete();
+			$location.path("/news");
 		});
 	}
 });
